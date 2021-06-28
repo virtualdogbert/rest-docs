@@ -1,0 +1,44 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:sectlinks:
+:stylesheet: style.css
+
+
+= Spring REST Docs using REST Assured and Test Containers
+
+== Intro
+
+Testing and Documentation are very important to developing applications that can scale across a team.  In the past with unit tests and
+manual documentation, this make made apps harder to manage. Now with technologies like Test Containers, and Spring RestDocs(using Rest Assured)
+Doing Integration level tests that really test the API level of your application and provide documentation.
+
+Test Containers give you the ability to use read databases build from docker container instance from your applications tests.
+
+Spring Rest Docs, provides documentation through tests. So instead of having a bunch of annotations, you write integration tests that
+actually hit the controller actions using the Rest Assured Http client. The documentation is generated using AsciiDoctor and request and
+response signpost generated from Rest Assured, via filters. Another benefit to Spring Rest Docs, is if you add or delete a parater from
+the documented request/responce, and you don't update it in your integration tests, your tests will fail. This forces you not only to
+maintain your Integration tests better but also your documentation.
+
+=== Test Containers
+* https://www.testcontainers.org/
+
+=== Spring REST Docs
+*  https://docs.spring.io/spring-restdocs/docs/current/reference/html5/
+* https://thoughts.tostring.blog/custom-attributes-in-spring-restdocs/
+* https://github.com/g00glen00b/spring-samples/tree/master/spring-boot-restdocs/src/test/resources/org/springframework/restdocs/templates/asciidoctor
+* https://github.com/g00glen00b/spring-samples/blob/master/spring-boot-restdocs/src/test/java/be/g00glen00b/apps/SpringBootRestDocsApplicationTest.java
+* https://dimitr.im/spring-rest-docs
+
+=== Rest Assured Docs:
+* https://github.com/rest-assured/rest-assured/wiki/Usage
+
+
+
+== Sample Output Documentation
+<<rest-docs#,Rest Docs>>
+
+== Running the app and tests
+RunConfigs are included in the runConfigs folder. To uses them, create a new runconfig and click the `Store as project file` make sure
+it points to the `runconfigs` folder, and then you should have access to run those configs.

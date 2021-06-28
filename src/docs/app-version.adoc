@@ -1,0 +1,37 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+:stylesheet: style.css
+
+include::index-link.adoc[]
+
+[[resources-app-version]]
+== App-Version
+
+app-version is a resource which represents the asset app-versions of Rest Docs.
+
+[[resources-app-version-list]]
+=== Get App-Versions (GET /api/appVersion)
+
+A `GET` request that will list the app-versions as JSON.
+
+==== Request Headers
+include::{snippets}/api-app-version-list/request-headers.adoc[]
+
+==== Example request
+include::{snippets}/api-app-version-list/http-request.adoc[]
+include::{snippets}/api-app-version-list/curl-request.adoc[]
+
+==== Response structure
+include::{snippets}/api-app-version-list/response-fields.adoc[]
+
+==== Example response
+include::{snippets}/api-app-version-list/http-response.adoc[]
+
+
+
+
+include::nav-links.adoc[]

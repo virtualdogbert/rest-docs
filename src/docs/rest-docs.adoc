@@ -1,0 +1,156 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+:stylesheet: style.css
+
+[[overview]]
+= Overview
+
+[[overview-http-verbs]]
+== HTTP Methods
+
+The Rest Docs API follows standard HTTP and REST conventions as closely as possible in its exposure of resources
+as end-points and use of HTTP methods (verbs).
+
+|===
+| HTTP Method | Usage
+
+| `GET`
+| Used to retrieve a resource
+
+| `POST`
+| Used to create a new resource
+
+| `PUT`
+| Used to update an existing resource
+
+| `DELETE`
+| Used to delete an existing resource
+|===
+
+[[overview-http-status-codes]]
+== HTTP status codes
+
+The Rest Docs API follows standard HTTP and REST conventions as closely as possible in it's use of HTTP status
+codes.
+
+=== 2xx - Success codes
+|===
+| Status code | Usage
+
+| `200 OK`
+| The request completed successfully
+|===
+
+=== 4xx - Client side error
+|===
+| Status code | Usage
+
+| `400 Bad Request`
+| The request was malformed. The response body will include an error providing further information
+
+| `401 Unauthorized`
+| Either wrong credentials or no credentials provided
+
+| `403 Forbidden`
+| The user is not authorized to perform the operation
+
+| `404 Not Found`
+| The requested resource does not exist
+
+| `422 Unprocessable Entity`
+| The requested has invalid or missing parameters
+|===
+See the error handing section for examples
+
+=== 5xx - Server side error
+|===
+| Status code | Usage
+
+| `500 Internal Server error`
+| An unexpected error occurred on the server
+|===
+
+
+[[resources-login]]
+== Login
+
+To login to the api you will use your Transition Manager user name and password.
+
+
+=== Login (POST /api/login)
+A `POST` request will log you into the API and give an authentication access token to use for future requests.
+
+==== Request Parameters/JSON body
+include::{snippets}/api-login/request-fields.adoc[]
+include::{snippets}/api-login/request-body.adoc[]
+
+==== Example request
+include::{snippets}/api-login/curl-request.adoc[]
+
+==== Response structure
+include::{snippets}/api-login/response-fields.adoc[]
+
+
+==== Example success response
+include::{snippets}/api-login/http-response.adoc[]
+
+==== Example invalid password response
+include::{snippets}/api-login-invalid/http-response.adoc[]
+
+
+
+[[resources-error]]
+== Error Handling
+
+Here are some examples of how errors are handled
+
+[[resources-event-list]]
+=== Unauthorized
+
+An example request where not authorization is passed, resulting in a 401 unauthorized error.
+
+==== Example request
+include::{snippets}/error-handling-unauthorized/http-request.adoc[]
+include::{snippets}/error-handling-unauthorized/curl-request.adoc[]
+
+==== Example response
+include::{snippets}/error-handling-unauthorized/http-response.adoc[]
+
+
+
+=== Forbidden
+An example request where the url is not valid, resulting in a 403 forbidden error.
+
+==== Example request
+include::{snippets}/error-handling-forbidden/http-request.adoc[]
+include::{snippets}/error-handling-forbidden/curl-request.adoc[]
+
+==== Example response
+include::{snippets}/error-handling-forbidden/http-response.adoc[]
+
+
+
+=== Validation
+An example request where the body/json is missing required parameters, resulting in a 400 bad request error.
+
+==== Request Parameters/JSON body
+include::{snippets}/error-validation/request-body.adoc[]
+
+==== Request Headers
+include::{snippets}/error-handling-forbidden/request-headers.adoc[]
+
+==== Example request
+include::{snippets}/error-validation/http-request.adoc[]
+include::{snippets}/error-validation/curl-request.adoc[]
+
+==== Response structure
+include::{snippets}/error-validation/response-fields.adoc[]
+
+==== Example response
+include::{snippets}/error-validation/http-response.adoc[]
+
+include::nav-links.adoc[]

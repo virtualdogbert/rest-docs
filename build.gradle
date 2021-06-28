@@ -1,11 +1,13 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+
 buildscript {
     repositories {
-        maven { url "https://repo.grails.org/grails/core" }
+        maven { url 'https://repo.grails.org/grails/core' }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
-        classpath "org.grails.plugins:hibernate5:7.0.4"
-        classpath "org.grails.plugins:views-gradle:2.0.2"
+        classpath 'org.grails.plugins:hibernate5:7.0.4'
+        classpath 'org.grails.plugins:views-gradle:2.0.2'
         classpath 'com.bmuschko:gradle-docker-plugin:6.0.0'
         classpath('com.epages:restdocs-api-spec-gradle-plugin:0.10.0') {
             exclude group: 'com.google.guava', module: 'guava'
@@ -16,6 +18,7 @@ buildscript {
 
 plugins {
     id 'com.gorylenko.gradle-git-properties' version '2.0.0'
+    id 'org.asciidoctor.convert' version '1.5.3'
 }
 
 
@@ -26,10 +29,11 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.grails.grails-web'
 apply plugin: 'org.grails.plugins.views-json'
+apply plugin: 'com.epages.restdocs-api-spec'
 apply plugin: 'com.bmuschko.docker-remote-api'
 
 repositories {
-    maven { url "https://repo.grails.org/grails/core" }
+    maven { url 'https://repo.grails.org/grails/core' }
 }
 
 configurations {
@@ -99,6 +103,9 @@ dependencies {
     testCompile 'org.grails:grails-web-testing-support'
     testCompile 'org.grails:views-json-testing-support'
     testCompile 'org.hibernate.validator:hibernate-validator:6.0.20.Final'
+    testCompile('com.epages:restdocs-api-spec-mockmvc:0.9.7')
+    testCompile('com.epages:restdocs-api-spec-restassured:0.9.7')
+
     runtime "org.postgresql:postgresql:42.2.0"
     testCompile "org.testcontainers:postgresql:1.15.1"
     testCompile "org.testcontainers:spock:1.15.1"
@@ -130,6 +137,51 @@ gitProperties {
     // Change date format in git.properties file.
     dateFormat = "yyyy-MM-dd HH:mm:ssZ"
     dateFormatTimeZone = 'EST'
+}
+
+openapi {
+    host = 'localhost:8080'
+    basePath = '/api'
+    title = 'Rest Docs Open API'
+    snippetsDirectory = 'build/docs/generated-snippets'
+    description = 'Rest Docs Open API'
+    version = '1.0.0'
+    format = 'json'
+}
+
+openapi3 {
+    server = 'http://localhost:8080'
+    title = 'Rest Docs Open API'
+    snippetsDirectory = 'build/docs/generated-snippets'
+    description = 'Rest Docs Open API'
+    version = '1.0.0'
+    format = 'yaml'
+}
+
+postman {
+    title = 'Rest Docs Open API'
+    version = '1.0.0'
+    baseUrl = 'http://localhost:8080'
+    snippetsDirectory = 'build/docs/generated-snippets'
+}
+
+integrationTest {
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStackTraces = true
+        showStandardStreams = true
+        exceptionFormat = TestExceptionFormat.FULL
+    }
+}
+
+test {
+    if (project.hasProperty('maxParallelForks')) {
+        maxParallelForks = project.maxParallelForks as int
+    }
+    if (project.hasProperty('forkEvery')) {
+        forkEvery = project.forkEvery as int
+    }
+
 }
 
 
@@ -174,3 +226,6 @@ task buildImage(type: DockerBuildImage, dependsOn: createDockerfile) {
     inputDir = file(dockerBuildDir)
     images.add(dockerTag)
 }
+
+
+apply from: 'gradle/restdocs.gradle'

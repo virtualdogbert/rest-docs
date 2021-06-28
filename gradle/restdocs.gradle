@@ -1,0 +1,60 @@
+buildscript {
+    repositories {
+        maven { url 'https://repo.spring.io/libs-snapshot' }
+    }
+}
+
+repositories {
+    maven { url 'https://repo.spring.io/libs-snapshot' }
+}
+
+//add extra user-defined properties to the project through ext block
+ext {
+    snippetsDir = file('build/docs/generated-snippets') //output dir of rest api doc snippets generated
+    restDocsVersion = '2.0.3.RELEASE'
+    restAssuredVersion = '3.0.6'
+}
+
+dependencies {
+    testCompile "org.springframework.restdocs:spring-restdocs-core:$restDocsVersion"
+    testCompile "org.springframework.restdocs:spring-restdocs-restassured:$restDocsVersion"
+    testCompile "org.springframework.restdocs:spring-restdocs-asciidoctor:$restDocsVersion"
+    testCompile "io.rest-assured:rest-assured:$restAssuredVersion"
+}
+
+//task to clean generated rest api docs snippets dir
+task cleanSnippetsDir(type: Delete) {
+    delete fileTree(dir: snippetsDir)
+}
+
+//configure test task
+test {
+    dependsOn cleanSnippetsDir //clean rest api docs generated before running tests
+    outputs.dir snippetsDir //add snippets dir as an output dir
+}
+
+//configure asciidoctor task provided by Gradle asciidoctor plugin- https://github.com/asciidoctor/asciidoctor-gradle-plugin
+asciidoctor {
+    configure(integrationTest) {
+        systemProperties System.properties
+    }
+
+    //integration tests are run before asciidoctor task
+    dependsOn integrationTest
+    logDocuments = true
+    sourceDir = file('src/docs')
+    inputs.dir snippetsDir
+    separateOutputDirs = false
+
+    attributes 'snippets': snippetsDir //configure snippets attribute for .adoc files
+
+}
+
+task packageDocumentation(type: Zip) {
+    archiveFileName = "REST-documentation.zip"
+    destinationDirectory = file("$buildDir/dist")
+
+    from "$buildDir/asciidoc"
+}
+
+asciidoctor.finalizedBy packageDocumentation

@@ -1,0 +1,121 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+:stylesheet: style.css
+
+include::index-link.adoc[]
+
+[[resources-user]]
+== User
+
+user is a resource which represents the asset users of Transition Manager.
+
+[[resources-user-list]]
+=== Get Users (GET /api/user)
+
+A `GET` request that will list the users as JSON.
+
+==== Request Parameters
+include::{snippets}/api-user-list/request-parameters.adoc[]
+
+==== Request Headers
+include::{snippets}/api-user-list/request-headers.adoc[]
+
+==== Example request
+include::{snippets}/api-user-list/http-request.adoc[]
+include::{snippets}/api-user-list/curl-request.adoc[]
+
+==== Response structure
+include::{snippets}/api-user-list/response-fields.adoc[]
+
+==== Example response
+include::{snippets}/api-user-list/http-response.adoc[]
+
+
+
+=== Get user (GET /api/user/$id)
+A `GET` request that will get a user, as JSON.
+
+==== Request Parameters
+include::{snippets}/api-user-fetch/path-parameters.adoc[]
+
+==== Request Headers
+include::{snippets}/api-user-fetch/request-headers.adoc[]
+
+==== Example request
+include::{snippets}/api-user-fetch/http-request.adoc[]
+include::{snippets}/api-user-fetch/curl-request.adoc[]
+
+==== Response structure
+include::{snippets}/api-user-fetch/response-fields.adoc[]
+
+==== Example response
+include::{snippets}/api-user-fetch/http-response.adoc[]
+
+
+
+=== Create user (POST /api/user)
+A `POST` request will create a new user.
+
+==== Request Parameters/JSON body
+include::{snippets}/api-user-create/request-fields.adoc[]
+include::{snippets}/api-user-create/request-body.adoc[]
+
+==== Request Headers
+include::{snippets}/api-user-create/request-headers.adoc[]
+
+==== Example request
+include::{snippets}/api-user-create/http-request.adoc[]
+include::{snippets}/api-user-create/curl-request.adoc[]
+
+==== Response structure
+include::{snippets}/api-user-create/response-fields.adoc[]
+
+
+==== Example response
+include::{snippets}/api-user-create/http-response.adoc[]
+
+
+
+=== Update user (PUT /api/user/$id)
+A `PUT` request will update a user.
+
+==== Request Parameters/JSON body
+include::{snippets}/api-user-update/request-fields.adoc[]
+include::{snippets}/api-user-update/request-body.adoc[]
+
+==== Request Headers
+include::{snippets}/api-user-update/request-headers.adoc[]
+
+==== Example request
+include::{snippets}/api-user-update/http-request.adoc[]
+include::{snippets}/api-user-update/curl-request.adoc[]
+
+==== Response structure
+include::{snippets}/api-user-update/response-fields.adoc[]
+
+==== Example response
+include::{snippets}/api-user-update/http-response.adoc[]
+
+
+
+=== Delete user (DELETE /api/user/$id)
+A `DELETE` request that will delete a user.
+
+==== Request Parameters
+include::{snippets}/api-user-delete/path-parameters.adoc[]
+
+==== Request Headers
+include::{snippets}/api-user-delete/request-headers.adoc[]
+
+==== Example request
+include::{snippets}/api-user-delete/http-request.adoc[]
+include::{snippets}/api-user-delete/curl-request.adoc[]
+
+==== Example response
+include::{snippets}/api-user-delete/http-response.adoc[]
+
+include::nav-links.adoc[]

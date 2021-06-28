@@ -8,4 +8,12 @@ beans = {
 
     securityContextRepository(org.springframework.security.web.context.NullSecurityContextRepository)
 
+    authenticationEntryPoint(RestAwareAuthenticationEntryPoint) {
+        messageSource = ref('messageSource')
+        jsonTemplateService = ref('jsonTemplateService')
+    }
+
+    accessDeniedHandler(RestAccessDeniedHandler) {
+        jsonTemplateService = ref('jsonTemplateService')
+    }
 }

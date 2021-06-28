@@ -1,0 +1,16 @@
+|===
+|Part|Required|Description
+
+{{#requestParts}}
+|{{name}}
+|
+ifeval::["{{optional}}"=="true"]
+   `false`
+endif::[]
+ifeval::["{{optional}}"=="false"]
+   `true`
+endif::[]
+|{{description}}
+
+{{/requestParts}}
+|===

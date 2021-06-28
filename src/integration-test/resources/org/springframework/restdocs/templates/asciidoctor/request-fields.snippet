@@ -1,0 +1,17 @@
+|===
+|Path|Type|Required|Description
+
+{{#fields}}
+|{{path}}
+|{{type}}
+|
+ifeval::["{{optional}}"=="true"]
+   `false`
+endif::[]
+ifeval::["{{optional}}"=="false"]
+   `true`
+endif::[]
+|{{description}}
+
+{{/fields}}
+|===
