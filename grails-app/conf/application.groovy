@@ -1,13 +1,74 @@
-grails.plugin.springsecurity.filterChain.chainMap = [
-        //Stateless chain
-        [
-                pattern: '/**',
-                filters: 'JOINED_FILTERS,-anonymousAuthenticationFilter,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter'
-        ],
+grails.databinding.convertEmptyStringsToNull = false
+server.servlet.session.timeout = 3600 //60 minute session timeout
 
-        //Traditional, stateful chain
-        [
-                pattern: '/stateful/**',
-                filters: 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter'
-        ]
+api.version ='1.0'
+
+
+grails.{
+    plugin {
+        springsecurity {
+            filterChain.chainMap = [
+                    [pattern: '/api/appVersion', filters: 'anonymousAuthenticationFilter,restTokenValidationFilter,restExceptionTranslationFilter,filterInvocationInterceptor'],
+                    [pattern: '/api/**', filters: 'JOINED_FILTERS,-anonymousAuthenticationFilter,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter'],  // Stateless chain
+            ]
+
+            adh {
+                // errorPage = '/errorHandler/error'
+                errorPage = null
+                useForward = false
+            }
+            auth {
+                loginFormUrl = '/module/auth/login'
+                useForward = false
+            }
+
+            scpf.forceEagerSessionCreation= false
+
+            rest {
+                token {
+                    validation {
+                        enableAnonymousAccess = true
+                    }
+                    storage {
+                        jwt {
+                            expiration = 3600 // default expiration to 1 hour
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+grails.databinding.dateFormats = [
+    "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+    'yyyy-MM-dd'
+]
+
+grails.plugin.springsecurity.rest.token.storage.jwt.secret = "IneedToHaveALongEnoughDefaultSecretForThis"
+
+
+grails.plugin.springsecurity.providerNames = [
+        'daoAuthenticationProvider',
+        'anonymousAuthenticationProvider'
+]
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'rest.docs.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'rest.docs.UserRole'
+grails.plugin.springsecurity.authority.className = 'rest.docs.Role'
+grails.plugin.springsecurity.auth.ajaxLoginFormUrl = null
+
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+        [pattern: '/', access: ['permitAll']],
+        [pattern: '/error', access: ['permitAll']],
+        [pattern: '/index', access: ['permitAll']],
+        [pattern: '/index.gsp', access: ['permitAll']],
+        [pattern: '/shutdown', access: ['permitAll']],
+        [pattern: '/assets/**', access: ['permitAll']],
+        [pattern: '/**/js/**', access: ['permitAll']],
+        [pattern: '/**/css/**', access: ['permitAll']],
+        [pattern: '/**/images/**', access: ['permitAll']],
+        [pattern: '/**/favicon.ico', access: ['permitAll']],
+        [pattern: '/actuator/**', access: ['permitAll']]
 ]

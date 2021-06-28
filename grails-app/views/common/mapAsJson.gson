@@ -1,0 +1,5 @@
+model {
+    Map data
+}
+
+json g.render(data)

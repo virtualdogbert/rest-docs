@@ -1,0 +1,37 @@
+package rest.docs.command.user
+
+import rest.docs.command.CommandTrait
+
+class IndexCommand implements CommandTrait {
+    static List<Integer> Pagination = [5, 10, 25, 50, 100]
+
+    Integer max = 10
+    Integer offset = 0
+    String  sort = 'id'
+    String  order = 'ace'
+    String  username
+    Boolean enabled
+    Boolean accountExpired
+    Boolean accountLocked
+    Boolean passwordExpired
+
+    Integer getMax() {
+        nearest(max, Pagination)
+    }
+
+    Integer getOffSet() {
+        offset * getMax()
+    }
+
+    static constraints = {
+        username nullable: true
+        enabled nullable: true
+        accountExpired nullable: true
+        accountLocked nullable: true
+        passwordExpired nullable: true
+        max nullable: true, min: 1, max: 100
+        order inList: ['ace','desc']
+        sort inList: ['id', 'username', 'enabled', 'accountExpired', 'accountLocked', 'passwordExpired', 'dateCreated', 'lastUpdated']
+    }
+
+}

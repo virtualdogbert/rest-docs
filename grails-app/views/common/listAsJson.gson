@@ -1,0 +1,5 @@
+model {
+    List data
+}
+
+json g.render(data)

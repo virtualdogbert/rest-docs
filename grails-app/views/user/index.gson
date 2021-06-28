@@ -1,0 +1,12 @@
+import grails.gorm.PagedResultList
+import rest.docs.User
+
+model {
+    PagedResultList<User> userList
+}
+
+json {
+    total userList.totalCount
+    data tmpl.user(userList)
+}
+

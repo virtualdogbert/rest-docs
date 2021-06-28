@@ -3,15 +3,26 @@ package rest.docs
 class UrlMappings {
 
     static mappings = {
-        delete "/$controller/$id(.$format)?"(action:"delete")
-        get "/$controller(.$format)?"(action:"index")
-        get "/$controller/$id(.$format)?"(action:"show")
-        post "/$controller(.$format)?"(action:"save")
-        put "/$controller/$id(.$format)?"(action:"update")
-        patch "/$controller/$id(.$format)?"(action:"patch")
 
-        "/"(controller: 'application', action:'index')
-        "500"(view: '/error')
-        "404"(view: '/notFound')
+
+        "/api/$controller"(method: "GET", action: "index")
+        "/api/$controller/$id(.$format)?"( action: "show", method: "GET")
+
+        "/api/$controller/$id/$action(.$format)?"(method: "GET")
+        "/api/$controller/$id/$action(.$format)?"(method: "POST")
+        "/api/$controller/$id/$action(.$format)?"(method: "PUT")
+        "/api/$controller/$id/$action(.$format)?"(method: "DELETE")
+
+        "/api/$controller/$id(.$format)?"(action: "delete", method: "DELETE")
+        "/api/$controller/$id(.$format)?"(action: "update", method: "PUT")
+        "/api/$controller(.$format)?"(action: "save", method: "POST")
+
+        "/api/$controller/$action(.$format)?"(method: "POST")
+        "/api/$controller/$action(.$format)?"(method: "PUT")
+        "/api/$controller/$action(.$format)?"(method: "GET")
+        "/api/$controller/$action(.$format)?"(method: "PATCH")
+        "/api/$controller/$action(.$format)?"(method: "DELETE")
+
+        "/"(controller: 'application', action: 'index')
     }
 }

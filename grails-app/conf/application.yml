@@ -49,9 +49,9 @@ grails:
             json:
               - application/json
               - text/json   
-            hal:
-              - application/hal+json
-              - application/hal+xml  
+#            hal:
+#              - application/hal+json
+#              - application/hal+xml
             xml:
               - text/xml
               - application/xml                                 
@@ -79,7 +79,6 @@ hibernate:
 dataSource:
     pooled: true
     jmxExport: true
-    driverClassName: org.h2.Driver
     username: sa
     password: ''
 
@@ -87,15 +86,19 @@ environments:
     development:
         dataSource:
             dbCreate: create-drop
-            url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            url: jdbc:tc:postgresql:9.6.8:///dev_db
+            driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
     test:
         dataSource:
-            dbCreate: update
-            url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            dbCreate: create-drop
+            url: jdbc:tc:postgresql:9.6.8:///test_db
+            driverClassName: org.testcontainers.jdbc.ContainerDatabaseDriver
+
     production:
         dataSource:
             dbCreate: none
-            url: jdbc:h2:./prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            url: jdbc:postgresql://localhost:5432/prod_db
+            driverClassName: org.postgresql.Driver
             properties:
                 jmxEnabled: true
                 initialSize: 5
