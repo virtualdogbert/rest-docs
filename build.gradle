@@ -14,6 +14,11 @@ buildscript {
 }
 
 
+plugins {
+    id 'com.gorylenko.gradle-git-properties' version '2.0.0'
+}
+
+
 version '0.1'
 group 'rest.docs'
 
@@ -112,6 +117,14 @@ tasks.withType(GroovyCompile) {
     configure(groovyOptions) {
         forkOptions.jvmArgs = ['-Xmx1024m']
     }
+}
+
+// Customize Git properties plugin.
+gitProperties {
+    // Change date format in git.properties file.
+    dateFormat = "yyyy-MM-dd HH:mm:ssZ"
+    dateFormatTimeZone = 'EST'
+}
 
 
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
