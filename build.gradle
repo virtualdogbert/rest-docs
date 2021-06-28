@@ -99,6 +99,12 @@ dependencies {
     testCompile 'org.grails:grails-web-testing-support'
     testCompile 'org.grails:views-json-testing-support'
     testCompile 'org.hibernate.validator:hibernate-validator:6.0.20.Final'
+    runtime "org.postgresql:postgresql:42.2.0"
+    testCompile "org.testcontainers:postgresql:1.15.1"
+    testCompile "org.testcontainers:spock:1.15.1"
+
+    // for dev mode:
+    developmentOnly "org.testcontainers:postgresql:1.15.1"
 }
 
 bootRun {
